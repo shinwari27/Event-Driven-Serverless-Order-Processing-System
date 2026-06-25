@@ -1,0 +1,5 @@
+local.settings.json
+set_stock.py
+__pycache__/
+*.pyc
+.venv/

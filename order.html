@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Place Your Order — LaptopZone</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--navy:#0a1628;--blue:#0078D4;--blue-dk:#005A9E;--text:#1a1a2e;--muted:#6B7280;--border:#E5E7EB;--bg:#F1F5F9;--card:#ffffff;--r:12px;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);}
+    /* NAV */
+    nav{background:var(--navy);display:flex;align-items:center;justify-content:space-between;padding:0 36px;height:64px;position:sticky;top:0;z-index:100;box-shadow:0 2px 24px rgba(0,0,0,.35);}
+    .n-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+    .n-icon{width:38px;height:38px;background:var(--blue);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:20px;}
+    .n-txt{font-size:19px;font-weight:800;color:#fff;letter-spacing:-.3px;}
+    .n-txt span{color:#60A5FA;}
+    .n-links{display:flex;gap:28px;list-style:none;}
+    .n-links a{color:rgba(255,255,255,.75);font-size:14px;font-weight:500;text-decoration:none;transition:color .2s;}
+    .n-links a:hover{color:#fff;}
+    .n-back{background:rgba(255,255,255,.1);color:#fff;padding:9px 20px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;border:1px solid rgba(255,255,255,.15);transition:background .2s;}
+    .n-back:hover{background:rgba(255,255,255,.18);}
+    /* PAGE */
+    .page-head{background:var(--navy);padding:28px 36px 24px;color:#fff;}
+    .breadcrumb{font-size:12px;color:rgba(255,255,255,.5);margin-bottom:8px;}
+    .breadcrumb a{color:#60A5FA;text-decoration:none;}
+    .breadcrumb a:hover{text-decoration:underline;}
+    .page-head h1{font-size:26px;font-weight:800;letter-spacing:-.3px;}
+    .page-head p{font-size:13px;color:rgba(255,255,255,.6);margin-top:5px;}
+    /* LAYOUT */
+    .layout{max-width:1060px;margin:36px auto;padding:0 24px 80px;display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:start;}
+    @media(max-width:860px){.layout{grid-template-columns:1fr;}}
+    /* FORM CARD */
+    .form-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
+    .fc-head{background:var(--blue);padding:20px 28px;color:#fff;}
+    .fc-head h2{font-size:16px;font-weight:700;}
+    .fc-head p{font-size:12px;opacity:.8;margin-top:3px;}
+    .fc-body{padding:28px;}
+    .row2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+    .fg{margin-bottom:20px;}
+    .fg label{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;}
+    .fg label .req{color:#DC2626;margin-left:2px;}
+    .fg input,.fg select{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;color:var(--text);outline:none;background:#fff;appearance:none;transition:border-color .18s,box-shadow .18s;}
+    .fg input:focus,.fg select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,120,212,.15);}
+    .fg input::placeholder{color:#A19F9D;}
+    .fg .err{font-size:11.5px;color:#DC2626;margin-top:4px;display:none;}
+    .fg input.invalid,.fg select.invalid{border-color:#DC2626;}
+    .fg input.invalid+.err,.fg select.invalid+.err{display:block;}
+    .select-wrap{position:relative;}
+    .select-wrap::after{content:'▾';position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--muted);pointer-events:none;}
+    .select-wrap select{padding-right:36px;}
+    .section-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:24px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+    /* Place Order Button */
+    .btn-order{width:100%;padding:14px;background:var(--blue);color:#fff;border:none;border-radius:9px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:background .2s,transform .1s;margin-top:8px;}
+    .btn-order:hover{background:var(--blue-dk);}
+    .btn-order:active{transform:scale(.98);}
+    .btn-order:disabled{background:#9CA3AF;cursor:not-allowed;transform:none;}
+    .spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+    /* Status */
+    .status{border-radius:9px;padding:16px 18px;margin-top:18px;font-size:13.5px;font-weight:500;display:none;align-items:flex-start;gap:12px;}
+    .status.success{background:#DFF6DD;color:#107C10;border:1px solid #9FD89F;display:none;}
+    .status.error{background:#FDE7E9;color:#A4262C;border:1px solid #F1BBBC;display:none;}
+    .status-icon{font-size:20px;flex-shrink:0;}
+    .status-text strong{display:block;margin-bottom:3px;}
+    .oid{display:inline-block;background:rgba(16,124,16,.1);border-radius:4px;padding:2px 8px;font-family:monospace;font-size:12px;margin-top:4px;word-break:break-all;}
+    /* Secure note */
+    .secure-note{text-align:center;font-size:11px;color:var(--muted);margin-top:14px;display:flex;align-items:center;justify-content:center;gap:6px;}
+    /* ORDER SUMMARY */
+    .summary-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;position:sticky;top:90px;}
+    .sc-head{background:var(--navy);padding:18px 22px;color:#fff;}
+    .sc-head h2{font-size:15px;font-weight:700;}
+    .sc-body{padding:20px 22px;}
+    /* Laptop visual in summary */
+    .sum-laptop{margin-bottom:18px;}
+    .lv-frame{background:#1C1C26;border-radius:6px 6px 3px 3px;padding:5px 5px 4px;box-shadow:0 6px 18px rgba(0,0,0,.2);position:relative;}
+    .lv-frame::before{content:'';position:absolute;top:3px;left:50%;transform:translateX(-50%);width:5px;height:5px;background:#2a2a38;border-radius:50%;}
+    .lv-scr{height:90px;border-radius:3px;background:var(--sg,linear-gradient(135deg,#0078D4,#1D4ED8));position:relative;overflow:hidden;}
+    .lv-scr::after{content:'';position:absolute;inset:0 0 70% 0;background:linear-gradient(to bottom,rgba(255,255,255,.1),transparent);}
+    .lv-hinge{background:#9095A0;height:4px;}
+    .lv-base{background:linear-gradient(to bottom,#CDD2D8,#B8BDC4);height:14px;border-radius:1px 1px 5px 5px;display:flex;align-items:center;justify-content:center;}
+    .lv-tp{width:30%;height:6px;background:#A4A9B0;border-radius:2px;}
+    .lv-shad{height:5px;margin:0 10%;background:radial-gradient(ellipse,rgba(0,0,0,.12),transparent 70%);border-radius:50%;}
+    /* Summary details */
+    .s-name{font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;}
+    .s-sku{font-size:10px;color:var(--muted);font-family:monospace;margin-bottom:12px;}
+    .s-specs{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+    .s-spec-row{display:flex;justify-content:space-between;font-size:12px;}
+    .s-spec-row .lbl{color:var(--muted);}
+    .s-spec-row .val{font-weight:600;color:var(--text);}
+    .divider{border:none;border-top:1px solid var(--border);margin:14px 0;}
+    .price-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+    .price-row .lbl{font-size:13px;color:var(--muted);}
+    .price-row .val{font-size:14px;font-weight:600;}
+    .price-row.total .lbl{font-size:14px;font-weight:700;color:var(--text);}
+    .price-row.total .val{font-size:22px;font-weight:800;color:var(--blue);}
+    .s-badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;}
+    .s-badge{font-size:10px;background:#F1F5F9;border:1px solid var(--border);padding:3px 9px;border-radius:5px;color:var(--muted);}
+    /* FOOTER */
+    footer{background:var(--navy);color:rgba(255,255,255,.65);padding:36px 36px 20px;}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;max-width:1060px;margin:0 auto 32px;}
+    .fa .br{font-size:18px;font-weight:800;color:#fff;margin-bottom:8px;}
+    .fa .br span{color:#60A5FA;}
+    .fa p{font-size:13px;line-height:1.7;max-width:260px;}
+    .fc h4{font-size:11px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;}
+    .fc ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+    .fc ul a{font-size:12px;color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s;}
+    .fc ul a:hover{color:#fff;}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:18px;text-align:center;font-size:11px;color:rgba(255,255,255,.3);max-width:1060px;margin:0 auto;}
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="n-logo">
+    <div class="n-icon">💻</div>
+    <span class="n-txt">Laptop<span>Zone</span></span>
+  </a>
+  <ul class="n-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html">Laptops</a></li>
+    <li><a href="#">Support</a></li>
+  </ul>
+  <a href="index.html" class="n-back">← Back to Store</a>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-head">
+  <div class="breadcrumb"><a href="index.html">Home</a> / <a href="index.html">Laptops</a> / Place Order</div>
+  <h1>🛒 Complete Your Order</h1>
+  <p>Fill in your details below to place your order. You'll receive an email confirmation within minutes.</p>
+</div>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- LEFT: FORM -->
+  <div class="form-card">
+    <div class="fc-head">
+      <h2>Customer Information</h2>
+      <p>All fields marked with * are required</p>
+    </div>
+    <div class="fc-body">
+      <form id="orderForm" novalidate>
+
+        <div class="section-lbl">👤 Personal Details</div>
+
+        <div class="row2">
+          <div class="fg">
+            <label for="firstName">First Name <span class="req">*</span></label>
+            <input type="text" id="firstName" placeholder="e.g. Jane" autocomplete="given-name"/>
+            <div class="err">Please enter your first name.</div>
+          </div>
+          <div class="fg">
+            <label for="lastName">Last Name <span class="req">*</span></label>
+            <input type="text" id="lastName" placeholder="e.g. Smith" autocomplete="family-name"/>
+            <div class="err">Please enter your last name.</div>
+          </div>
+        </div>
+
+        <div class="fg">
+          <label for="email">Email Address <span class="req">*</span></label>
+          <input type="email" id="email" placeholder="e.g. jane@email.com" autocomplete="email"/>
+          <div class="err">Please enter a valid email address.</div>
+        </div>
+
+        <div class="fg">
+          <label for="phone">Phone Number <span class="req">*</span></label>
+          <input type="tel" id="phone" placeholder="e.g. (416) 555-0123" autocomplete="tel"/>
+          <div class="err">Please enter a valid phone number (min 10 digits).</div>
+        </div>
+
+        <div class="section-lbl">📦 Order Details</div>
+
+        <div class="row2">
+          <div class="fg">
+            <label for="quantity">Quantity <span class="req">*</span></label>
+            <input type="number" id="quantity" min="1" value="1" placeholder="Enter quantity"/>
+            <div class="err">Please enter a quantity of at least 1.</div>
+          </div>
+          <div class="fg">
+            <label for="province">Province <span class="req">*</span></label>
+            <div class="select-wrap">
+              <select id="province">
+                <option value="">-- Select --</option>
+                <option value="ON">Ontario</option>
+                <option value="BC">British Columbia</option>
+                <option value="AB">Alberta</option>
+                <option value="QC">Quebec</option>
+                <option value="MB">Manitoba</option>
+                <option value="SK">Saskatchewan</option>
+                <option value="NS">Nova Scotia</option>
+                <option value="NB">New Brunswick</option>
+                <option value="PE">PEI</option>
+                <option value="NL">Newfoundland</option>
+              </select>
+            </div>
+            <div class="err">Please select a province.</div>
+          </div>
+        </div>
+
+        <div class="fg">
+          <label for="address">Delivery Address <span class="req">*</span></label>
+          <input type="text" id="address" placeholder="e.g. 123 Main Street, Toronto, ON M5V 2T6" autocomplete="street-address"/>
+          <div class="err">Please enter your delivery address.</div>
+        </div>
+
+        <div class="section-lbl">💳 Payment Note</div>
+        <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:12px 16px;font-size:13px;color:#1D4ED8;margin-bottom:20px;">
+          🔒 Payment will be securely collected after order confirmation. Our team will contact you within 24 hours to process payment.
+        </div>
+
+        <!-- PLACE ORDER BUTTON -->
+        <button type="submit" class="btn-order" id="submitBtn">
+          <span id="btnTxt">Place Order</span>
+          <div class="spinner" id="spinner"></div>
+        </button>
+
+        <!-- STATUS MESSAGES -->
+        <div class="status success" id="successMsg">
+          <div class="status-icon">✅</div>
+          <div class="status-text">
+            <strong>Your order has been received. A confirmation email is on its way to you shortly.</strong>
+            <div class="oid" id="orderIdDisplay"></div>
+          </div>
+        </div>
+
+        <div class="status error" id="errorMsg">
+          <div class="status-icon">❌</div>
+          <div class="status-text">
+            <strong>Something went wrong.</strong>
+            <span id="errDetail">Please check your details and try again.</span>
+          </div>
+        </div>
+
+        <div class="secure-note">🔒 Secure & Encrypted · Your data is safe with LaptopZone</div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- RIGHT: ORDER SUMMARY -->
+  <div class="summary-card">
+    <div class="sc-head"><h2>🧾 Order Summary</h2></div>
+    <div class="sc-body">
+
+      <!-- Laptop visual -->
+      <div class="sum-laptop">
+        <div class="lv-frame">
+          <div class="lv-scr" id="sumScreen"></div>
+        </div>
+        <div class="lv-hinge"></div>
+        <div class="lv-base"><div class="lv-tp"></div></div>
+        <div class="lv-shad"></div>
+      </div>
+
+      <!-- Laptop details -->
+      <div class="s-name" id="sumName">Loading...</div>
+      <div class="s-sku" id="sumSku"></div>
+
+      <div class="s-specs">
+        <div class="s-spec-row"><span class="lbl">Screen</span><span class="val" id="sumScreen2">—</span></div>
+        <div class="s-spec-row"><span class="lbl">Processor</span><span class="val" id="sumCpu">—</span></div>
+        <div class="s-spec-row"><span class="lbl">Memory</span><span class="val" id="sumRam">—</span></div>
+        <div class="s-spec-row"><span class="lbl">Storage</span><span class="val" id="sumStorage">—</span></div>
+        <div class="s-spec-row"><span class="lbl">Brand</span><span class="val" id="sumBrand">—</span></div>
+      </div>
+
+      <hr class="divider"/>
+
+      <div class="price-row">
+        <span class="lbl">Unit Price</span>
+        <span class="val" id="sumUnitPrice">$0.00</span>
+      </div>
+      <div class="price-row">
+        <span class="lbl">Quantity</span>
+        <span class="val" id="sumQty">1</span>
+      </div>
+      <div class="price-row">
+        <span class="lbl">Shipping</span>
+        <span class="val" style="color:#16A34A;">FREE</span>
+      </div>
+      <div class="price-row">
+        <span class="lbl">Tax (HST 13%)</span>
+        <span class="val" id="sumTax">$0.00</span>
+      </div>
+
+      <hr class="divider"/>
+
+      <div class="price-row total">
+        <span class="lbl">Total</span>
+        <span class="val" id="sumTotal">$0.00</span>
+      </div>
+
+      <div class="s-badges">
+        <span class="s-badge">🚚 Free 2-Day Delivery</span>
+        <span class="s-badge">🛡️ 1-Year Warranty</span>
+        <span class="s-badge">↩ 30-Day Returns</span>
+        <span class="s-badge">🔒 Secure Order</span>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /layout -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="fa"><div class="br">Laptop<span>Zone</span></div><p>Canada's trusted online laptop store. Best prices, fast delivery, and 1-year warranty on all products.</p></div>
+    <div class="fc"><h4>Products</h4><ul><li><a href="#">Gaming Laptops</a></li><li><a href="#">Business Laptops</a></li><li><a href="#">Student Laptops</a></li><li><a href="#">2-in-1 Laptops</a></li></ul></div>
+    <div class="fc"><h4>Support</h4><ul><li><a href="#">Track Order</a></li><li><a href="#">Returns Policy</a></li><li><a href="#">Warranty</a></li><li><a href="#">Contact Us</a></li></ul></div>
+    <div class="fc"><h4>Company</h4><ul><li><a href="#">About Us</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li><li><a href="index.html">Back to Store</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">© 2026 LaptopZone Canada. All rights reserved. | Powered by Azure Functions + Azure Static Web Apps</div>
+</footer>
+
+<script>
+  // ── AZURE FUNCTION URL ──────────────────────────────────────────────
+  const FUNCTION_URL = "http://localhost:7071/api/s";
+  //const FUNCTION_URL = "https://rg-order-processing-dev-g5bye7cxdxeadecr.canadacentral-01.azurewebsites.net/api/submit_order";
+
+  // ── READ URL PARAMS & POPULATE SUMMARY ────────────────────────────
+  const p = new URLSearchParams(window.location.search);
+  const laptop = {
+    name:    decodeURIComponent(p.get('name')    || 'Selected Laptop'),
+    price:   parseFloat(p.get('price'))          || 0,
+    brand:   decodeURIComponent(p.get('brand')   || '—'),
+    cpu:     decodeURIComponent(p.get('cpu')     || '—'),
+    ram:     decodeURIComponent(p.get('ram')     || '—'),
+    storage: decodeURIComponent(p.get('storage') || '—'),
+    screen:  decodeURIComponent(p.get('screen')  || '—'),
+    sku:     p.get('sku') || 'N/A'
+  };
+
+  // Screen gradient map by SKU
+  const gradients = {
+    'HP-PAV-15':    'linear-gradient(135deg,#667eea,#764ba2)',
+    'ASUS-VIV-S14': 'linear-gradient(135deg,#0093E9,#80D0C7)',
+    'ACER-NIT-15':  'linear-gradient(135deg,#FF416C,#FF4B2B)',
+    'GATE-15':      'linear-gradient(135deg,#c471ed,#f64f59)',
+    'DELL-INS-15':  'linear-gradient(135deg,#0F2027,#2C5364)',
+    'LEN-IDE-5':    'linear-gradient(135deg,#11998E,#38EF7D)',
+    'MS-SUR-6':     'linear-gradient(135deg,#4776E6,#8E54E9)',
+    'ASUS-ROG-G16': 'linear-gradient(135deg,#0F0C29,#302B63)',
+    'HP-SPEC-X360': 'linear-gradient(135deg,#f7971e,#ffd200)',
+    'LEN-X1-CAR':   'linear-gradient(135deg,#141E30,#243B55)'
+  };
+
+  // Populate summary panel
+  document.getElementById('sumName').textContent    = laptop.name;
+  document.getElementById('sumSku').textContent     = 'SKU: ' + laptop.sku;
+  document.getElementById('sumBrand').textContent   = laptop.brand;
+  document.getElementById('sumCpu').textContent     = laptop.cpu;
+  document.getElementById('sumRam').textContent     = laptop.ram;
+  document.getElementById('sumStorage').textContent = laptop.storage;
+  document.getElementById('sumScreen2').textContent = laptop.screen;
+
+  // Apply screen gradient
+  const screenEl = document.getElementById('sumScreen');
+  screenEl.style.setProperty('--sg', gradients[laptop.sku] || 'linear-gradient(135deg,#0078D4,#1D4ED8)');
+
+  function calcAndDisplay(qty) {
+    const unit = laptop.price;
+    const sub  = unit * qty;
+    const tax  = sub * 0.13;
+    const tot  = sub + tax;
+    document.getElementById('sumUnitPrice').textContent = '$' + unit.toFixed(2);
+    document.getElementById('sumQty').textContent       = qty;
+    document.getElementById('sumTax').textContent       = '$' + tax.toFixed(2);
+    document.getElementById('sumTotal').textContent     = '$' + tot.toFixed(2);
+    return tot;
+  }
+  calcAndDisplay(1);
+
+  // Update total when qty changes
+  document.getElementById('quantity').addEventListener('change', function() {
+    calcAndDisplay(parseInt(this.value));
+  });
+
+  // ── FORM VALIDATION ────────────────────────────────────────────────
+  function markInvalid(el) { el.classList.add('invalid'); }
+  function markValid(el)   { el.classList.remove('invalid'); }
+
+  ['firstName','lastName','email','phone','address'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('input', function() { markValid(this); });
+  });
+
+  function validate(data) {
+    var ok = true;
+    var fn = document.getElementById('firstName');
+    var ln = document.getElementById('lastName');
+    var em = document.getElementById('email');
+    var ph = document.getElementById('phone');
+    var pr = document.getElementById('province');
+    var ad = document.getElementById('address');
+
+    if (fn.value.trim().length < 2) { markInvalid(fn); ok = false; } else markValid(fn);
+    if (ln.value.trim().length < 2) { markInvalid(ln); ok = false; } else markValid(ln);
+    var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRe.test(data.email)) { markInvalid(em); ok = false; } else markValid(em);
+    var digitsOnly = (data.phone || '').replace(/\D/g,'');
+    if (digitsOnly.length < 10) { markInvalid(ph); ok = false; } else markValid(ph);
+    if (!data.province) { markInvalid(pr); ok = false; } else markValid(pr);
+    if (!data.address || data.address.length < 5) { markInvalid(ad); ok = false; } else markValid(ad);
+    return ok;
+  }
+
+  // ── FORM SUBMIT ────────────────────────────────────────────────────
+  document.getElementById('orderForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    document.getElementById('successMsg').style.display = 'none';
+    document.getElementById('errorMsg').style.display   = 'none';
+
+    var qty = parseInt(document.getElementById('quantity').value);
+
+    var payload = {
+      // Customer info
+      name:     document.getElementById('firstName').value.trim() + ' ' + document.getElementById('lastName').value.trim(),
+      email:    document.getElementById('email').value.trim(),
+      phone:    document.getElementById('phone').value.trim(),
+      address:  document.getElementById('address').value.trim(),
+      province: document.getElementById('province').value,
+      // Laptop info (from URL params)
+      product:      laptop.sku,
+      product_name: laptop.name,
+      sku:      laptop.sku,
+      brand:    laptop.brand,
+      quantity: qty,
+      unit_price: laptop.price,
+      total:    parseFloat((laptop.price * qty * 1.13).toFixed(2))
+    };
+
+    if (!validate(payload)) return;
+
+    // Show loading
+    var btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    document.getElementById('btnTxt').textContent = 'Placing Order…';
+    document.getElementById('spinner').style.display = 'block';
+
+    // Send to Azure Function
+    fetch(FUNCTION_URL, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(payload)
+    })
+    .then(function(r) {
+      if (!r.ok) return r.text().then(function(t) { throw new Error(t || 'Server error ' + r.status); });
+      return r.json();
+    })
+    .then(function(data) {
+      if (data.order_id) {
+        document.getElementById('orderIdDisplay').textContent = 'Order ID: ' + data.order_id;
+      }
+      document.getElementById('successMsg').style.display = 'flex';
+      document.getElementById('orderForm').reset();
+      calcAndDisplay(1);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    })
+    .catch(function(err) {
+      document.getElementById('errDetail').textContent = err.message || 'Please check your details and try again.';
+      document.getElementById('errorMsg').style.display = 'flex';
+    })
+    .finally(function() {
+      btn.disabled = false;
+      document.getElementById('btnTxt').textContent = 'Place Order';
+      document.getElementById('spinner').style.display = 'none';
+    });
+  });
+</script>
+</body>
+</html>

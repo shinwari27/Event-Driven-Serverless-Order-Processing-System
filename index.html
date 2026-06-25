@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LaptopZone — Premium Laptops Canada</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--navy:#0a1628;--blue:#0078D4;--blue-dk:#005A9E;--text:#1a1a2e;--muted:#6B7280;--border:#E5E7EB;--bg:#F1F5F9;--card:#ffffff;--r:12px;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);}
+    /* NAV */
+    nav{background:var(--navy);display:flex;align-items:center;justify-content:space-between;padding:0 36px;height:64px;position:sticky;top:0;z-index:100;box-shadow:0 2px 24px rgba(0,0,0,.35);}
+    .n-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+    .n-icon{width:38px;height:38px;background:var(--blue);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:20px;}
+    .n-txt{font-size:19px;font-weight:800;color:#fff;letter-spacing:-.3px;}
+    .n-txt span{color:#60A5FA;}
+    .n-links{display:flex;gap:28px;list-style:none;}
+    .n-links a{color:rgba(255,255,255,.75);font-size:14px;font-weight:500;text-decoration:none;transition:color .2s;}
+    .n-links a:hover,.n-links a.active{color:#fff;}
+    .n-links a.active{color:#60A5FA;}
+    .n-cta{background:var(--blue);color:#fff;padding:9px 20px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;transition:background .2s;}
+    .n-cta:hover{background:var(--blue-dk);}
+    /* PROMO */
+    .promo{background:linear-gradient(90deg,var(--blue),#1D4ED8);text-align:center;padding:13px;color:#fff;font-size:13px;font-weight:500;}
+    .promo strong{font-weight:700;}
+    /* HERO */
+    .hero{background:linear-gradient(135deg,#050d1a 0%,#0a1628 45%,#0a2a4a 100%);padding:60px 36px 52px;text-align:center;position:relative;overflow:hidden;}
+    .hero::before{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(0,120,212,.18) 0%,transparent 65%);pointer-events:none;}
+    .h-pill{display:inline-block;background:rgba(0,120,212,.18);color:#60A5FA;border:1px solid rgba(0,120,212,.35);padding:4px 18px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:18px;}
+    .hero h1{font-size:44px;font-weight:800;color:#fff;line-height:1.15;letter-spacing:-.6px;margin-bottom:14px;}
+    .hero h1 span{color:#60A5FA;}
+    .hero p{font-size:15px;color:rgba(255,255,255,.6);max-width:520px;margin:0 auto 26px;line-height:1.7;}
+    .h-stats{display:flex;justify-content:center;gap:44px;}
+    .h-stat .v{font-size:22px;font-weight:800;color:#fff;}
+    .h-stat .l{font-size:11px;color:rgba(255,255,255,.5);font-weight:500;letter-spacing:.05em;text-transform:uppercase;}
+    /* PRODUCTS */
+    .pw{max-width:1340px;margin:0 auto;padding:48px 24px 64px;}
+    .sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;}
+    .sh h2{font-size:24px;font-weight:700;}
+    .sh h2 span{color:var(--blue);}
+    .cp{background:#E0E7FF;color:#3730A3;font-size:12px;font-weight:700;padding:4px 14px;border-radius:20px;}
+    /* GRID */
+    .grid{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;}
+    @media(max-width:1200px){.grid{grid-template-columns:repeat(4,1fr);}}
+    @media(max-width:900px){.grid{grid-template-columns:repeat(3,1fr);}}
+    @media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr);}}
+    /* CARD */
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);display:flex;flex-direction:column;overflow:hidden;transition:transform .25s,box-shadow .25s,border-color .25s;}
+    .card:hover{transform:translateY(-7px);box-shadow:0 24px 48px rgba(0,0,0,.13);border-color:var(--blue);}
+    /* Badges */
+    .cb{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:3px 10px;border-radius:20px;margin:12px 0 0 12px;}
+    .badge-row{min-height:30px;}
+    .b-hot{background:#FEE2E2;color:#B91C1C;}
+    .b-gaming{background:#052E16;color:#4ADE80;}
+    .b-prem{background:#1E1B4B;color:#A5B4FC;}
+    .b-deal{background:var(--blue);color:#fff;}
+    .b-val{background:#FEF3C7;color:#92400E;}
+    .b-biz{background:#0F172A;color:#7DD3FC;}
+    .b-new{background:#D1FAE5;color:#065F46;}
+    /* Spec pills */
+    .sr{display:flex;flex-wrap:wrap;gap:4px;padding:10px 12px 0;}
+    .sp{font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;}
+    .sc{background:#F5F3FF;color:#7C3AED;}
+    .su{background:#EFF6FF;color:#1D4ED8;}
+    .sm{background:#F0FDF4;color:#15803D;}
+    .ss{background:#FFF7ED;color:#C2410C;}
+    /* Laptop illustration */
+    .lv-wrap{padding:18px 14px 6px;}
+    .laptop-img { width:100%; height:160px; object-fit:contain; padding:10px; display:block; }
+    .lv-frame{background:#1C1C26;border-radius:6px 6px 3px 3px;padding:5px 5px 4px;box-shadow:0 8px 22px rgba(0,0,0,.22);position:relative;}
+    .lv-frame::before{content:'';position:absolute;top:3px;left:50%;transform:translateX(-50%);width:5px;height:5px;background:#2a2a38;border-radius:50%;}
+    .lv-scr{height:108px;border-radius:3px 3px 1px 1px;background:var(--sg);position:relative;overflow:hidden;}
+    .lv-scr::after{content:'';position:absolute;inset:0 0 70% 0;background:linear-gradient(to bottom,rgba(255,255,255,.09),transparent);}
+    .lv-scr::before{content:'';position:absolute;bottom:14px;left:10px;right:10px;height:1.5px;background:rgba(255,255,255,.12);border-radius:1px;}
+    .lv-hinge{background:#9095A0;height:4px;}
+    .lv-base{background:linear-gradient(to bottom,#CDD2D8,#B8BDC4);height:17px;border-radius:1px 1px 5px 5px;display:flex;align-items:center;justify-content:center;}
+    .lv-tp{width:32%;height:7px;background:#A4A9B0;border-radius:2px;border:1px solid #93989F;}
+    .lv-shad{height:6px;margin:0 12%;background:radial-gradient(ellipse,rgba(0,0,0,.14),transparent 70%);border-radius:50%;}
+    /* Card body */
+    .cb-body{padding:12px 14px 16px;flex:1;display:flex;flex-direction:column;gap:5px;}
+    .c-brand{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;}
+    .c-name{font-size:12.5px;font-weight:600;color:var(--text);line-height:1.4;}
+    .c-spec{font-size:11px;color:var(--muted);line-height:1.5;flex:1;}
+    .c-star{font-size:12px;color:#F59E0B;}
+    .c-star span{font-size:10px;color:var(--muted);margin-left:3px;}
+    .c-price{font-size:21px;font-weight:800;letter-spacing:-.5px;color:var(--text);}
+    .c-price .was{font-size:12px;font-weight:400;color:var(--muted);text-decoration:line-through;margin-right:5px;}
+    .c-av{font-size:11px;font-weight:500;}
+    .av-y{color:#16A34A;} .av-l{color:#D97706;}
+    .btn-buy{display:block;width:100%;padding:10px 14px;background:var(--blue);color:#fff;text-align:center;text-decoration:none;border-radius:8px;font-size:13px;font-weight:600;transition:background .2s,transform .1s;margin-top:8px;}
+    .btn-buy:hover{background:var(--blue-dk);}
+    .btn-buy:active{transform:scale(.97);}
+    /* FOOTER */
+    footer{background:var(--navy);color:rgba(255,255,255,.65);padding:52px 36px 24px;margin-top:20px;}
+    .fg{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;max-width:1340px;margin:0 auto 40px;}
+    .fa .br{font-size:20px;font-weight:800;color:#fff;margin-bottom:10px;}
+    .fa .br span{color:#60A5FA;}
+    .fa p{font-size:13px;line-height:1.75;max-width:270px;}
+    .fc h4{font-size:12px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;}
+    .fc ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+    .fc ul a{font-size:13px;color:rgba(255,255,255,.55);text-decoration:none;transition:color .2s;}
+    .fc ul a:hover{color:#fff;}
+    .fb{border-top:1px solid rgba(255,255,255,.1);padding-top:20px;text-align:center;font-size:12px;color:rgba(255,255,255,.35);max-width:1340px;margin:0 auto;}
+    .fbd{display:flex;justify-content:center;gap:12px;margin-bottom:10px;}
+    .fbdg{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);padding:4px 12px;border-radius:6px;font-size:11px;}
+  </style>
+</head>
+<body>
+
+<div class="promo">🎉 <strong>Spend $2,000 and Save $200</strong> — Free shipping on all orders across Canada!</div>
+
+<nav>
+  <a href="index.html" class="n-logo">
+    <div class="n-icon">💻</div>
+    <span class="n-txt">Laptop<span>Zone</span></span>
+  </a>
+  <ul class="n-links">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="#">Laptops</a></li>
+    <li><a href="#">Gaming</a></li>
+    <li><a href="#">Business</a></li>
+    <li><a href="#">Deals</a></li>
+    <li><a href="#">Support</a></li>
+  </ul>
+  <a href="order.html" class="n-cta">🛒 Order Now</a>
+</nav>
+
+<div class="hero">
+  <div class="h-pill">✦ Canada's #1 Laptop Destination</div>
+  <h1>Find Your <span>Perfect Laptop</span></h1>
+  <p>From blazing-fast gaming rigs to ultra-thin business machines — 10 hand-picked laptops with fast delivery across Canada.</p>
+  <div class="h-stats">
+    <div class="h-stat"><div class="v">10+</div><div class="l">Models</div></div>
+    <div class="h-stat"><div class="v">$649</div><div class="l">Starting At</div></div>
+    <div class="h-stat"><div class="v">2-Day</div><div class="l">Delivery</div></div>
+    <div class="h-stat"><div class="v">1 Year</div><div class="l">Warranty</div></div>
+  </div>
+</div>
+
+<div class="pw">
+  <div class="sh">
+    <h2>Our <span>Laptops</span></h2>
+    <span class="cp">10 Products Available</span>
+  </div>
+  <div class="grid">
+
+    <!-- 1: HP Pavilion 15 -->
+    <div class="card">
+      <div class="badge-row"><div class="cb b-hot">🔥 Hot Deal</div></div>
+      <div class="sr"><span class="sp sc">15.6" Touch</span><span class="sp su">Core Ultra 5</span><span class="sp sm">24GB</span><span class="sp ss">1TB SSD</span></div>
+<div class="lv-wrap"><img src="https://bfasset.costco-static.com/U447IH35/as/br8cf6fg5wwz7k75tkxkhr/2155241-894__4?auto=webp&format=jpg&width=556&height=556&fit=bounds&canvas=556%2C556" alt="HP Pavilion 15" class="laptop-img"/></div>
+      <div class="cb-body">
+        <div class="c-brand">HP</div>
+        <div class="c-name">HP Pavilion 15 Touchscreen Laptop</div>
+        <div class="c-spec">Intel Core Ultra 5 225U · 24GB RAM · 1TB SSD · Win 11</div>
+        <div class="c-star">★★★☆☆ <span>(2 reviews)</span></div>
+        <div class="c-price"><span class="was">$1,099</span>$949.99</div>
+        <div class="c-av av-l">⚠ Limited Stock · Delivery Available</div>
+        <a class="btn-buy" href="order.html?name=HP+Pavilion+15+Touchscreen&price=949.99&brand=HP&cpu=Intel+Core+Ultra+5+225U&ram=24GB&storage=1TB+SSD&screen=15.6-inch+Touchscreen&sku=HP-PAV-15">Buy Now →</a>
+      </div>
+    </div>
+
+    <!-- 2: ASUS VivoBook S14 -->
+    <div class="card">
+      <div class="badge-row"><div class="cb b-deal">⏳ Limited Offer</div></div>
+      <div class="sr"><span class="sp sc">14" 2-in-1</span><span class="sp su">Core i5</span><span class="sp sm">16GB</span><span class="sp ss">1TB SSD</span></div>
+<div class="lv-wrap"><img src="https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcR-yAmyl1EgthfVgBLvil0Q9_57uiHD53A-llQAc8EoNcdRKPH8t5scvgbu_g5g_Xd4fGrZtyS1SMNVDSSmXJxY7BU8rTZ30g3StyBYNZyCTgNbgHZTUBroQsU" alt="ASUS VivoBook S14" class="laptop-img"/></div>      <div class="cb-body">
+        <div class="c-brand">ASUS</div>
+        <div class="c-name">ASUS VivoBook S14 Flip 2-in-1</div>
+        <div class="c-spec">Intel Core i5-13420H · 16GB RAM · 1TB SSD · Touch</div>
+        <div class="c-star">★★☆☆☆ <span>(1 review)</span></div>
+        <div class="c-price">$948.99</div>
+        <div class="c-av av-y">✓ Delivery Available</div>
+        <a class="btn-buy" href="order.html?name=ASUS+VivoBook+S14+Flip+2-in-1&price=948.99&brand=ASUS&cpu=Intel+Core+i5-13420H&ram=16GB&storage=1TB+SSD&screen=14-inch+Touchscreen+2-in-1&sku=ASUS-VIV-S14">Buy Now →</a>
+      </div>
+    </div>
+
+    <!-- 3: Acer Nitro Gaming -->
+    <div class="card">
+      <div class="badge-row"><div class="cb b-gaming">🎮 Gaming</div></div>
+      <div class="sr"><span class="sp sc">15.6"</span><span class="sp su">Core i7</span><span class="sp sm">16GB</span><span class="sp ss">1TB + RTX</span></div>
+<div class="lv-wrap"><img src="https://i5.walmartimages.com/asr/86be6bf9-0256-4b5b-b76f-2b2a628e2b2e.f185a3f76ce00a52c7c31233a86301dd.jpeg?odnHeight=640&odnWidth=640&odnBg=FFFFFF" alt="Acer Nitro V Gaming Laptop" class="laptop-img"/></div>      <div class="cb-body">
+        <div class="c-brand">Acer</div>
+        <div class="c-name">Acer Nitro V Gaming Laptop</div>
+        <div class="c-spec">Core i7-13620H · 16GB · 1TB SSD · NVIDIA RTX 5060</div>
+        <div class="c-star">★★★☆☆ <span>(7 reviews)</span></div>
+        <div class="c-price"><span class="was">$1,699</span>$1,499.99</div>
+        <div class="c-av av-y">✓ Delivery Available</div>
+        <a class="btn-buy" href="order.html?name=Acer+Nitro+V+Gaming+Laptop&price=1499.99&brand=Acer&cpu=Intel+Core+i7-13620H&ram=16GB&storage=1TB+SSD&screen=15.6-inch+FHD+144Hz&sku=ACER-NIT-15">Buy Now →</a>
+      </div>
+    </div>
+
+    <!-- 4: Gateway 15 -->
+    <div class="card">
+      <div class="badge-row"><div class="cb b-val">💰 Best Value</div></div>
+      <div class="sr"><span class="sp sc">15.6"</span><span class="sp su">Core 3</span><span class="sp sm">16GB</span><span class="sp ss">512GB</span></div>
+<div class="lv-wrap"><img src="https://laptopmedia.com/wp-content/uploads/2025/12/1-16.jpg" alt="HP Pavilion 15" class="laptop-img"/></div>      <div class="cb-body">
+        <div class="c-brand">Gateway · Acer</div>
+        <div class="c-name">Gateway 15.6-in Laptop by Acer</div>
+        <div class="c-spec">Intel Core 3 N355 · 16GB RAM · 512GB SSD · Win 11</div>
+        <div class="c-star">☆☆☆☆☆ <span>(No ratings yet)</span></div>
+        <div class="c-price">$749.99</div>
+        <div class="c-av av-y">✓ Online Only · Delivery Available</div>
+        <a class="btn-buy" href="order.html?name=Gateway+15.6-in+Laptop&price=749.99&brand=Gateway&cpu=Intel+Core+3+N355&ram=16GB&storage=512GB+SSD&screen=15.6-inch+FHD&sku=GATE-15">Buy Now →</a>
+      </div>
+    </div>
+
+    <!-- 5: Dell Inspiron 15 -->
+    <div class="card">
+      <div class="badge-row"><div class="cb b-new">⭐ Popular</div></div>
+      <div class="sr"><span class="sp sc">15.6" FHD</span><span class="sp su">Core i7</span><span class="sp sm">32GB</span><span class="sp ss">1TB SSD</span></div>
+<div class="lv-wrap"><img src="https://cdn2.electronicscrazy.sg/Productimage/2022-08-0801-36-2446.webp" alt="HP Pavilion 15" class="laptop-img"/></div>      <div class="cb-body">
+        <div class="c-brand">Dell</div>
+        <div class="c-name">Dell Inspiron 15 3000 Laptop</div>
+        <div class="c-spec">Intel Core i7-1355U · 32GB RAM · 1TB SSD · Win 11 Home</div>
+        <div class="c-star">★★★★☆ <span>(15 reviews)</span></div>
+        <div class="c-price"><span class="was">$1,399</span>$1,199.99</div>
+        <div class="c-av av-y">✓ Delivery Available</div>
+        <a class="btn-buy" href="order.html?name=Dell+Inspiron+15+3000&price=1199.99&brand=Dell&cpu=Intel+Core+i7-1355U&ram=32GB&storage=1TB+SSD&screen=15.6-inch+FHD&sku=DELL-INS-15">Buy Now →</a>
+      </div>
+    </div>
+
+    <!-- 6: Lenovo IdeaPad 5 -->
+    <div class="card">
+      <div class="badge-row"><div class="cb b-new">🏆 Best Seller</div></div>
+      <div class="sr"><span class="sp sc">15.6" FHD</span><span class="sp su">Core i5</span><span class="sp sm">16GB</span><span class="sp ss">512GB</span></div>
+      <div class="lv-wrap"><img src="https://m.media-amazon.com/images/I/61GJTwv3WQL.jpg" alt="HP Pavilion 15" class="laptop-img"/></div>
+      <div class="cb-body">
+        <div class="c-brand">Lenovo</div>
+        <div class="c-name">Lenovo IdeaPad 5 Laptop</div>
+        <div class="c-spec">Intel Core i5-1335U · 16GB RAM · 512GB SSD · Win 11</div>
+        <div class="c-star">★★★★★ <span>(23 reviews)</span></div>
+        <div class="c-price">$649.99</div>
+        <div class="c-av av-y">✓ Delivery Available</div>
+        <a class="btn-buy" href="order.html?name=Lenovo+IdeaPad+5&price=649.99&brand=Lenovo&cpu=Intel+Core+i5-1335U&ram=16GB&storage=512GB+SSD&screen=15.6-inch+FHD&sku=LEN-IDE-5">Buy Now →</a>
+      </div>
+    </div>
+
+    <!-- 7: Microsoft Surface Laptop 6 -->
+    <div class="card">
+      <div class="badge-row"><div class="cb b-prem">💎 Premium</div></div>
+      <div class="sr"><span class="sp sc">13.8" Touch</span><span class="sp su">Core Ultra 7</span><span class="sp sm">16GB</span><span class="sp ss">512GB</span></div>
+      <div class="lv-wrap"><img src="https://cdn.cs.1worldsync.com/bd/99/bd99d5c1-fbc7-4ee3-b448-f59b129fe770.jpg" alt="HP Pavilion 15" class="laptop-img"/></div>
+      <div class="cb-body">
+        <div class="c-brand">Microsoft</div>
+        <div class="c-name">Microsoft Surface Laptop 6</div>
+        <div class="c-spec">Intel Core Ultra 7 · 16GB RAM · 512GB SSD · PixelSense Touch</div>
+        <div class="c-star">★★★★★ <span>(8 reviews)</span></div>
+        <div class="c-price">$1,299.99</div>
+        <div class="c-av av-y">✓ Delivery Available</div>
+        <a class="btn-buy" href="order.html?name=Microsoft+Surface+Laptop+6&price=1299.99&brand=Microsoft&cpu=Intel+Core+Ultra+7&ram=16GB&storage=512GB+SSD&screen=13.8-inch+PixelSense+Touch&sku=MS-SUR-6">Buy Now →</a>
+      </div>
+    </div>
+
+    <!-- 8: ASUS ROG Strix G16 -->
+    <div class="card">
+      <div class="badge-row"><div class="cb b-gaming">🔥 Ultimate Gaming</div></div>
+      <div class="sr"><span class="sp sc">16" QHD 240Hz</span><span class="sp su">Ryzen 9</span><span class="sp sm">32GB</span><span class="sp ss">1TB+RTX4070</span></div>
+      <div class="lv-wrap"><img src="https://www.hp.com/ca-en/shop/media/catalog/product/d/b/db152f38-00f1-4e98-b7a3-dfd947ce18c3.png?store=ca-en&image-type=image&auto=avif&quality=100&format=jpg&bg-color=ffffff&type=image-product&width=960&fit=bounds" alt="HP Pavilion 15" class="laptop-img"/></div>
+      <div class="cb-body">
+        <div class="c-brand">ASUS ROG</div>
+        <div class="c-name">ASUS ROG Strix G16 Gaming Laptop</div>
+        <div class="c-spec">Ryzen 9 7945HX · 32GB · 1TB SSD · RTX 4070 · 240Hz</div>
+        <div class="c-star">★★★★☆ <span>(11 reviews)</span></div>
+        <div class="c-price"><span class="was">$2,199</span>$1,799.99</div>
+        <div class="c-av av-y">✓ Delivery Available</div>
+        <a class="btn-buy" href="order.html?name=ASUS+ROG+Strix+G16+Gaming&price=1799.99&brand=ASUS+ROG&cpu=AMD+Ryzen+9+7945HX&ram=32GB&storage=1TB+SSD&screen=16-inch+QHD+240Hz&sku=ASUS-ROG-G16">Buy Now →</a>
+      </div>
+    </div>
+
+    <!-- 9: HP Spectre x360 -->
+    <div class="card">
+      <div class="badge-row"><div class="cb b-prem">👑 Ultra Premium</div></div>
+      <div class="sr"><span class="sp sc">14" OLED Touch</span><span class="sp su">Core Ultra 7</span><span class="sp sm">32GB</span><span class="sp ss">2TB SSD</span></div>
+      <div class="lv-wrap"><img src="https://cdn.cs.1worldsync.com/be/88/be880d43-bc95-4d9d-9d29-7e45d018154d.jpg" alt="HP Pavilion 15" class="laptop-img"/></div>
+      <div class="cb-body">
+        <div class="c-brand">HP</div>
+        <div class="c-name">HP Spectre x360 14 2-in-1 Laptop</div>
+        <div class="c-spec">Core Ultra 7 155H · 32GB RAM · 2TB SSD · OLED Touch</div>
+        <div class="c-star">★★★★★ <span>(5 reviews)</span></div>
+        <div class="c-price">$1,899.99</div>
+        <div class="c-av av-y">✓ Delivery Available</div>
+        <a class="btn-buy" href="order.html?name=HP+Spectre+x360+14&price=1899.99&brand=HP&cpu=Intel+Core+Ultra+7+155H&ram=32GB&storage=2TB+SSD&screen=14-inch+OLED+Touch&sku=HP-SPEC-X360">Buy Now →</a>
+      </div>
+    </div>
+
+    <!-- 10: Lenovo ThinkPad X1 Carbon -->
+    <div class="card">
+      <div class="badge-row"><div class="cb b-biz">💼 Business Pro</div></div>
+      <div class="sr"><span class="sp sc">14" IPS</span><span class="sp su">Core i7</span><span class="sp sm">16GB</span><span class="sp ss">1TB SSD</span></div>
+      <div class="lv-wrap"><img src="https://www.pc-canada.com/dd2/img/item/A-1500x1500/8749099.jpg" alt="HP Pavilion 15" class="laptop-img"/></div>
+      <div class="cb-body">
+        <div class="c-brand">Lenovo</div>
+        <div class="c-name">Lenovo ThinkPad X1 Carbon Gen 11</div>
+        <div class="c-spec">Core i7-1365U · 16GB RAM · 1TB SSD · Windows 11 Pro</div>
+        <div class="c-star">★★★★☆ <span>(9 reviews)</span></div>
+        <div class="c-price"><span class="was">$1,699</span>$1,449.99</div>
+        <div class="c-av av-y">✓ Delivery Available</div>
+        <a class="btn-buy" href="order.html?name=Lenovo+ThinkPad+X1+Carbon+Gen+11&price=1449.99&brand=Lenovo&cpu=Intel+Core+i7-1365U&ram=16GB&storage=1TB+SSD&screen=14-inch+IPS&sku=LEN-X1-CAR">Buy Now →</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="fg">
+    <div class="fa">
+      <div class="br">Laptop<span>Zone</span></div>
+      <p>Canada's trusted online laptop store. Best prices, fast delivery, and 1-year warranty on all products.</p>
+    </div>
+    <div class="fc"><h4>Products</h4><ul><li><a href="#">Gaming Laptops</a></li><li><a href="#">Business Laptops</a></li><li><a href="#">Student Laptops</a></li><li><a href="#">2-in-1 Laptops</a></li><li><a href="#">Accessories</a></li></ul></div>
+    <div class="fc"><h4>Support</h4><ul><li><a href="#">Track Order</a></li><li><a href="#">Returns Policy</a></li><li><a href="#">Warranty</a></li><li><a href="#">Contact Us</a></li><li><a href="#">FAQ</a></li></ul></div>
+    <div class="fc"><h4>Company</h4><ul><li><a href="#">About Us</a></li><li><a href="#">Store Locations</a></li><li><a href="#">Careers</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li></ul></div>
+  </div>
+  <div class="fb">
+    <div class="fbd"><span class="fbdg">🔒 Secure Checkout</span><span class="fbdg">🚚 Fast Delivery</span><span class="fbdg">🛡️ 1-Year Warranty</span><span class="fbdg">↩ Easy Returns</span></div>
+    <p>© 2026 LaptopZone Canada. All rights reserved. | Powered by Azure Functions + Azure Static Web Apps</p>
+  </div>
+</footer>
+</body>
+</html>
